@@ -1,7 +1,7 @@
 CREATE TABLE transactions (
     id BIGSERIAL PRIMARY KEY,
     amount NUMERIC(15,2) NOT NULL,
-    transactionType VARCHAR(20) NOT NULL,
+    transaction_type VARCHAR(20) NOT NULL,
     category VARCHAR(100) NOT NULL,
     description TEXT,
     transaction_date DATE NOT NULL,
@@ -10,4 +10,4 @@ CREATE TABLE transactions (
     CONSTRAINT fk_transactions_account
     FOREIGN KEY (account_id) REFERENCES accounts(id)
 
-)
+);

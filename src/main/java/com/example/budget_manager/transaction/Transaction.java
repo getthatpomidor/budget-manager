@@ -18,14 +18,14 @@ public class Transaction {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "transaction_type")
     private TransactionType transactionType;
 
     @Column(nullable = false)
     private String category;
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="transaction_date")
     private LocalDate transactionDate;
 
     @ManyToOne()

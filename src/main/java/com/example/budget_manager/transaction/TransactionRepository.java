@@ -29,7 +29,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Query("""
     SELECT COALESCE(SUM(t.amount),0) from Transaction t
-    WHERE t.transactionType='EXPANSE'
+    WHERE t.transactionType='EXPENSE'
 """)
     BigDecimal totalExpense();
 
