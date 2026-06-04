@@ -1,6 +1,7 @@
 package com.example.budget_manager.transaction;
 
 import com.example.budget_manager.transaction.DTO.CreateTransactionRequest;
+import com.example.budget_manager.transaction.DTO.TransactionResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@Valid @RequestBody CreateTransactionRequest request) {
+    public ResponseEntity<TransactionResponse> createTransaction(@Valid @RequestBody CreateTransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(request));}
 
     @DeleteMapping("/{id}")
@@ -29,8 +30,8 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getAll(@RequestParam(required = false)LocalDate from,@RequestParam(required = false)LocalDate to, @RequestParam(required = false) String category) {
-        return transactionService.getAll(from, to, category);
+    public List<TransactionResponse> getAll(@RequestParam(required = false)LocalDate from,@RequestParam(required = false)LocalDate to, @RequestParam(required = false) String category) {
+        return transactionService.getAllTransactions(from, to, category);
     }
 }
 

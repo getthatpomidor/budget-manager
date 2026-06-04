@@ -13,7 +13,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     SELECT t from Transaction t
     WHERE (:from IS NULL OR t.transactionDate>= :from)
     AND (:to IS NULL OR t.transactionDate<= :to)
-    AND(:category IS NULL OR LOWER(t.category)==LOWER(:category))
+    AND(:category IS NULL OR LOWER(t.category)=LOWER(:category))
     """)
     List<Transaction> filter(LocalDate from, LocalDate to, String category);
 

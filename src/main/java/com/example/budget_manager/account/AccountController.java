@@ -1,5 +1,6 @@
 package com.example.budget_manager.account;
 
+import com.example.budget_manager.account.DTO.AccountResponse;
 import com.example.budget_manager.account.DTO.CreateAccountRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,15 +19,15 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Account> createAccount(@Valid @RequestBody CreateAccountRequest request) {
+    public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createAccount(request));
     }
     @GetMapping
-    public List<Account> getAllAccounts() {
+    public List<AccountResponse> getAllAccounts() {
         return service.getAllAccounts();
     }
     @GetMapping("/{id}")
-    public Account getAccountById(@PathVariable Long id) {
+    public AccountResponse getAccountById(@PathVariable Long id) {
         return service.getById(id);
     }
 

@@ -14,15 +14,21 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TransactionType transactionType;
+
+    @Column(nullable = false)
     private String category;
     private String description;
+
+    @Column(nullable = false)
     private LocalDate transactionDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "account_id")
     private Account account;
 

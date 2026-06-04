@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 
-public record CreateAccountRequest(@NotBlank String name) {
+public record CreateAccountRequest(@NotBlank(message = "Name cannot be blank") String name) {
 }
