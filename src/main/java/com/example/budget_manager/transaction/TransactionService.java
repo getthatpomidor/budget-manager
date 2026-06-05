@@ -9,8 +9,11 @@ import com.example.budget_manager.transaction.DTO.TransactionResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -29,7 +32,7 @@ public class TransactionService {
         transaction.setAmount(request.amount());
         transaction.setDescription(request.description());
         transaction.setType(request.transactionType());
-        transaction.setCategory(request.category());
+        transaction.setCategory(request.category().trim().toUpperCase());
         transaction.setTransactionDate(request.transactionDate());
         transaction.setAccount(account);
 
@@ -58,7 +61,9 @@ public class TransactionService {
         transactionRepository.delete(transaction);
     }
     public List<TransactionResponse> getAllTransactions(LocalDate from, LocalDate to, String category) {
-        return transactionRepository.filter(from, to, category).stream().map(this::mapToResponse).toList();
+        String normalizedCategory =
+                category != null ? category.trim().toUpperCase() : null;
+        return transactionRepository.filter(from, to, normalizedCategory).stream().map(this::mapToResponse).toList();
     }
 
     private TransactionResponse mapToResponse(Transaction transaction) {
@@ -71,6 +76,24 @@ public class TransactionService {
                 transaction.getTransactionDate(),
                 transaction.getAccount().getId()
         );
+    }
+
+    public byte[] exportTransactions(Long accountId){
+        List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
+
+        StringWriter sw = new StringWriter();
+        sw.append("id,amount,type,category,description,date\n");
+
+        for(Transaction transaction : transactions){
+            sw.append(transaction.getId().toString()).append(",");
+            sw.append(transaction.getAmount().toString()).append(",");
+            sw.append(transaction.getType().name()).append(",");
+            sw.append(transaction.getCategory()).append(",");
+            sw.append(Optional.ofNullable(transaction.getDescription()).orElse("")).append(",");
+            sw.append(transaction.getTransactionDate().toString()).append("\n");
+        }
+
+        return sw.toString().getBytes(StandardCharsets.UTF_8);
     }
 
 
