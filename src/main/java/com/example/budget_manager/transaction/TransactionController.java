@@ -2,8 +2,11 @@ package com.example.budget_manager.transaction;
 
 import com.example.budget_manager.transaction.DTO.CreateTransactionRequest;
 import com.example.budget_manager.transaction.DTO.TransactionResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +22,19 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @Operation(summary = "Create transaction", description = "Creates a new transaction")
     @PostMapping
     public ResponseEntity<TransactionResponse> createTransaction(@Valid @RequestBody CreateTransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(request));}
 
+    @Operation(summary = "Delete transaction",description = "Deletes transaction")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
         transactionService.deleteTransaction(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Get all transactions", description = "Lists all transactions")
     @GetMapping
     public List<TransactionResponse> getAll(@RequestParam(required = false)LocalDate from,@RequestParam(required = false)LocalDate to, @RequestParam(required = false) String category) {
         return transactionService.getAllTransactions(from, to, category);

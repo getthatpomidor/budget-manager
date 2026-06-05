@@ -1,6 +1,7 @@
 package com.example.budget_manager.summary;
 
 import com.example.budget_manager.summary.DTO.SummaryResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ public class SummaryController {
         this.summaryService = summaryService;
     }
 
+    @Operation(summary = "Get summary", description = "Retrieves transactions summary")
     @GetMapping
     public SummaryResponse getSummary() {
         return summaryService.getSummary();
