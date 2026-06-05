@@ -3,6 +3,7 @@ package com.example.budget_manager.account;
 import com.example.budget_manager.account.DTO.AccountResponse;
 import com.example.budget_manager.account.DTO.CreateAccountRequest;
 import com.example.budget_manager.exceptions.ConflictException;
+import com.example.budget_manager.exceptions.ResourceNotFoundException;
 import com.example.budget_manager.transaction.Transaction;
 import com.example.budget_manager.transaction.TransactionRepository;
 import com.example.budget_manager.transaction.TransactionType;
@@ -58,5 +59,11 @@ class AccountServiceTest {
 
         assertThrows(ConflictException.class,
                 () -> accountService.deleteAccount(saved.getId()));
+    }
+
+    @Test
+    void shouldThrowResourceNotFoundWhenAccountDoesNotExist(){
+        assertThrows(ResourceNotFoundException.class, ()->accountService.getById(100L));
+
     }
 }

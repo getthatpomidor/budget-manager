@@ -165,8 +165,7 @@ public class TransactionServiceTest {
 
     @Test
     void shouldThrowExceptionWhenDeleteNotExistingTransaction(){
-        Account account = new Account();
-        account.setName("test");
+        assertThrows(ResourceNotFoundException.class, ()->transactionService.deleteTransaction(100L));
     }
 
 }
