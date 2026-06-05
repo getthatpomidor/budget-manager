@@ -8,7 +8,7 @@ REST API for managing personal finances: accounts, transactions and budget summa
 - INCOME & EXPENSE transactions
 - Automatic account balance updates
 - Transaction filtering by date and category
-- Budget summary (income, expenses, category breakdown)
+- Budget summary
 - CSV export of transactions
 - OpenAPI documentation
 - PostgreSQL database
